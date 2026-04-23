@@ -1,0 +1,2271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Winston — Pub bord de Loire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0a1628;
+            --color-bg-light: #14213d;
+            --color-accent: #ffd700;
+            --color-accent-light: #ffed4e;
+            --color-winston-blue: #4a7ed0;
+            --color-text: #f5f5f5;
+            --color-text-muted: #b8c5d6;
+            --color-wood: #8b4513;
+            --color-loire: #2e7d32;
+            --font-title: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--color-accent);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: var(--color-bg);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 40%, rgba(255, 215, 0, 0.15) 0%, transparent 55%),
+                        linear-gradient(180deg, rgba(10, 22, 40, 0.8) 0%, rgba(10, 22, 40, 0.65) 35%, rgba(10, 22, 40, 0.95) 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .hero-bg-carousel {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .carousel {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.8s ease;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.5) saturate(1.1);
+        }
+
+        .carousel-nav {
+            position: absolute;
+            left: 50%;
+            bottom: 18px;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.6rem;
+            z-index: 2;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .carousel-dot.active {
+            background: var(--color-accent);
+            transform: scale(1.15);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            width: 100%;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .hero h1 {
+            font-family: var(--font-title);
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            color: var(--color-accent);
+            margin: 0;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--color-text-muted);
+            max-width: 650px;
+            margin-bottom: 0;
+        }
+
+        .logo-hero {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            object-position: top center;
+            border-radius: 50%;
+            display: block;
+            border: 4px solid rgba(255, 215, 0, 0.7);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 80vh;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .logo-hero {
+                width: 140px;
+                height: 140px;
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--color-accent);
+            color: var(--color-bg);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            border: 2px solid var(--color-accent);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--color-accent);
+        }
+
+        .clickable-card {
+            cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .clickable-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--color-accent);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+        }
+
+        .form-popup {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            background: rgba(6, 12, 24, 0.78);
+            backdrop-filter: blur(6px);
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .form-content {
+            position: relative;
+            width: 100%;
+            max-width: 620px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: linear-gradient(180deg, #10203a 0%, #0a1628 100%);
+            border: 1px solid rgba(255, 215, 0, 0.28);
+            border-radius: 14px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+        }
+
+        .form-content h2 {
+            margin-bottom: 0.8rem;
+            text-align: left;
+        }
+
+        .form-content h2::after {
+            margin-left: 0;
+        }
+
+        .form-intro {
+            color: var(--color-text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            color: var(--color-accent);
+            font-size: 2rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .afterwork-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+        .form-row label {
+            color: var(--color-accent-light);
+            font-size: 0.92rem;
+            font-weight: 600;
+        }
+
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .afterwork-form input,
+        .afterwork-form select,
+        .afterwork-form textarea {
+            width: 100%;
+            padding: 0.95rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 215, 0, 0.18);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--color-text);
+            font-family: var(--font-body);
+            font-size: 1rem;
+        }
+
+        .afterwork-form input::placeholder,
+        .afterwork-form textarea::placeholder {
+            color: #9fb0c8;
+        }
+
+        .afterwork-form input:focus,
+        .afterwork-form select:focus,
+        .afterwork-form textarea:focus {
+            outline: none;
+            border-color: rgba(255, 215, 0, 0.65);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.08);
+        }
+
+        .form-submit {
+            margin-top: 0.5rem;
+            padding: 1rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--color-accent);
+            color: var(--color-bg);
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-1px);
+            opacity: 0.95;
+        }
+
+        @media (max-width: 768px) {
+            .form-content {
+                padding: 1.4rem;
+            }
+
+            .two-cols {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sections générales */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-family: var(--font-title);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--color-accent);
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--color-accent);
+            margin: 1rem auto;
+        }
+
+        h3 {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            color: var(--color-accent-light);
+            margin: 2rem 0 1rem;
+        }
+
+        /* Page Le Lieu */
+        .lieu-content {
+            display: grid;
+            grid-template-columns: 1.3fr minmax(420px, 520px);
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .lieu-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .lieu-text p {
+            margin-bottom: 1.5rem;
+            color: var(--color-text-muted);
+        }
+
+        .lieu-text strong {
+            color: var(--color-accent);
+        }
+
+        .lieu-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature {
+            padding: 1.5rem;
+            background: var(--color-bg-light);
+            border-left: 3px solid var(--color-accent);
+        }
+
+        .feature h4 {
+            color: var(--color-accent);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature p {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+        }
+
+        .lieu-visual {
+            position: relative;
+            overflow: hidden;
+            background: var(--color-bg-light);
+            border-radius: 22px;
+            min-height: 840px;
+            max-height: 95vh;
+            padding: 0;
+            box-shadow: inset 0 0 0 1px rgba(255, 215, 0, 0.08);
+        }
+
+        .lieu-carousel {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .lieu-carousel-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s ease;
+        }
+
+        .lieu-carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .lieu-carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .lieu-carousel-dots {
+            position: absolute;
+            left: 50%;
+            bottom: 18px;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.6rem;
+            z-index: 1;
+        }
+
+        .lieu-carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .lieu-carousel-dot.active {
+            transform: scale(1.2);
+            background: var(--color-accent);
+        }
+
+        @media (max-width: 768px) {
+            .lieu-content {
+                grid-template-columns: 1fr;
+            }
+
+            .lieu-visual {
+                min-height: 520px;
+            }
+        }
+
+        /* Programmation */
+        .prog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .day-card {
+            background: var(--color-bg-light);
+            padding: 2rem;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .day-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--color-accent);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .day-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .day-card:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-4px);
+        }
+
+        .day-name {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .day-theme {
+            font-size: 1.1rem;
+            color: var(--color-text);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .day-desc {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Programmation Été */
+        .summer-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            font-size: 1.2rem;
+            color: var(--color-text-muted);
+        }
+
+        .summer-grid .day-card {
+            background: linear-gradient(135deg, var(--color-bg-light) 0%, rgba(46, 125, 50, 0.1) 100%);
+        }
+
+        .summer-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--color-loire);
+            color: var(--color-text);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        /* Afterwork */
+        .afterwork-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .afterwork-info h3 {
+            margin-top: 0;
+        }
+
+        .afterwork-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .afterwork-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .afterwork-list li::before {
+            content: '→';
+            color: var(--color-accent);
+        }
+
+        .highlight-box {
+            background: var(--color-accent);
+            color: var(--color-bg);
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .highlight-box h4 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .highlight-box .price {
+            font-family: var(--font-title);
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        /* Cocktail Signature */
+        .cocktail-hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--color-bg-light);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 4rem;
+        }
+
+        .cocktail-subtitle {
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .cocktail-main-title {
+            font-family: var(--font-title);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+
+        .cocktail-name {
+            font-family: var(--font-title);
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .cocktail-desc {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+        }
+
+        .cocktail-days {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-weight: 600;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .cocktail-main-title {
+                font-size: 2.2rem;
+            }
+
+            .cocktail-name {
+                font-size: 1.6rem;
+            }
+
+            .cocktail-days {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        .carte-hero-images .cocktail-gallery-card,
+        .carte-hero-images .cocktail-photo {
+            border-radius: 20px;
+            overflow: hidden;
+            min-height: 200px;
+            max-height: 220px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .carte-hero-images .cocktail-gallery-card {
+            padding: 0;
+            border: none;
+            background: transparent;
+        }
+
+        .carte-hero-images .cocktail-gallery-card img,
+        .carte-hero-images .cocktail-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .carte-hero-images .cocktail-gallery-card h4,
+        .carte-hero-images .cocktail-gallery-card p {
+            display: none;
+        }
+
+        .carte-hero-images .cocktail-photo {
+            margin: 0;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            background: rgba(0, 0, 0, 0.06);
+        }
+
+        .carte-hero-images .cocktail-gallery-card h4 {
+            margin-top: 1rem;
+        }
+
+        .carte-hero-images .cocktail-gallery-card p {
+            margin-bottom: 1rem;
+        }
+
+        .cocktail-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .cocktail-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+            margin: 2.5rem auto;
+            max-width: 1100px;
+        }
+
+        .cocktail-gallery-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 18px;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cocktail-gallery-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
+        }
+
+        .cocktail-gallery-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .cocktail-gallery-card h4 {
+            margin: 1.25rem 1rem 0.5rem;
+            font-size: 1.25rem;
+            color: var(--color-accent);
+        }
+
+        .cocktail-gallery-card p {
+            color: var(--color-text-muted);
+            padding: 0 1.25rem 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .cocktail-photo {
+            margin: 2rem auto;
+            max-width: 800px;
+            overflow: hidden;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .carte-hero .cocktail-photo {
+            margin: 0;
+            max-width: 100%;
+        }
+
+        .cocktail-photo img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        @media (max-width: 900px) {
+            .carte-hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .carte-hero-text {
+                margin: 0 auto;
+            }
+
+            .carte-hero-images {
+                width: 100%;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .cocktail-hero h3 {
+            position: relative;
+            z-index: 1;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cocktail-day {
+            padding: 1rem 2rem;
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+        }
+
+        /* La Carte */
+        .carte-hero {
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 1.2rem;
+            align-items: start;
+            background: linear-gradient(135deg, var(--color-accent) 0%, #b8860b 100%);
+            color: var(--color-bg);
+            padding: 1.8rem 1.6rem;
+            max-width: 980px;
+            margin: 0 auto 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carte-hero-text {
+            z-index: 1;
+            text-align: left;
+        }
+
+        .carte-hero-copy {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            margin: 0 0 1rem;
+            color: var(--color-bg);
+            line-height: 1.6;
+        }
+
+        .carte-hero-images {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 1rem;
+            z-index: 1;
+            align-items: start;
+        }
+
+        .carte-hero::after {
+            content: '✦';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .carte-hero h3 {
+            color: var(--color-bg);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cocktail-moment {
+            font-family: var(--font-title);
+            font-size: 2.5rem;
+            margin: 1rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .limited-badge {
+            display: inline-block;
+            background: var(--color-bg);
+            color: var(--color-accent);
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-section {
+            margin-bottom: 4rem;
+        }
+
+        .menu-category {
+            margin-bottom: 3rem;
+        }
+
+        .menu-category h4 {
+            font-family: var(--font-title);
+            font-size: 1.3rem;
+            color: var(--color-accent);
+            border-bottom: 2px solid var(--color-accent);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .menu-subcategory {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 1.5rem 0 1rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--color-wood);
+        }
+
+        .menu-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 0.8rem 0;
+            border-bottom: 1px dotted rgba(184, 197, 214, 0.3);
+        }
+
+        .item-name {
+            color: var(--color-text);
+        }
+
+        .item-price {
+            color: var(--color-accent);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* Nouvelle carte jaune */
+        .carte-jaune {
+            color: var(--color-accent);
+            font-family: var(--font-body);
+            font-size: 1.13em;
+            margin-top: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .carte-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem 2.5rem;
+            justify-content: center;
+        }
+        .carte-block {
+            min-width: 260px;
+            max-width: 340px;
+            background: rgba(20,33,61,0.7);
+            border-radius: 14px;
+            padding: 1.3rem 1.2rem 1.1rem 1.2rem;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.13);
+        }
+        .carte-titre {
+            font-family: var(--font-title);
+            font-size: 1.18em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--color-accent-light);
+        }
+        .carte-emoji {
+            font-size: 1.2em;
+            margin-right: 0.2em;
+        }
+        .carte-sous {
+            font-size: 1em;
+            font-weight: 600;
+            color: #ffe066;
+            margin-top: 0.7em;
+            display: inline-block;
+        }
+        .carte-prix {
+            color: #ffe066;
+            font-weight: 600;
+            margin-left: 0.3em;
+        }
+        .carte-happy {
+            background: rgba(255,215,0,0.08);
+            border: 1.5px dashed var(--color-accent-light);
+        }
+        .carte-happy-item {
+            font-weight: 600;
+            color: var(--color-accent-light);
+        }
+        @media (max-width: 900px) {
+            .carte-list {
+                flex-direction: column;
+                align-items: center;
+            }
+            .carte-block {
+                min-width: 220px;
+                max-width: 98vw;
+            }
+        }
+
+        .happy-hour-banner {
+            background: var(--color-bg-light);
+            border: 2px solid var(--color-accent);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .happy-hour-banner h4 {
+            color: var(--color-accent);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .happy-hour-details {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .hh-item {
+            text-align: center;
+        }
+
+        .hh-time {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hh-price {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            color: var(--color-accent);
+            margin-top: 0.3rem;
+        }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: var(--color-bg-light);
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .contact-card:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-4px);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h4 {
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .contact-card p {
+            color: var(--color-text-muted);
+            text-align: center;
+            margin: 0;
+        }
+
+        .contact-email-card p {
+            display: inline-block;
+            max-width: 100%;
+            width: auto;
+            text-align: center;
+            margin: 0 auto;
+            word-break: break-word;
+        }
+
+        .contact-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 1rem;
+            background: var(--color-bg-light);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            color: white;
+            font-family: var(--font-body);
+        }
+
+        .contact-form textarea {
+            min-height: 120px;
+        }
+
+        .contact-form button {
+            padding: 1rem;
+            background: var(--color-accent);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--color-bg);
+        }
+
+        .map-placeholder {
+            background: var(--color-bg-light);
+            height: 400px;
+            margin-top: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            color: var(--color-text-muted);
+            overflow: hidden;
+        }
+
+        .map-placeholder iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-bg-light);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .lieu-content,
+            .afterwork-content {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .lieu-features {
+                grid-template-columns: 1fr;
+            }
+
+            .cocktail-days {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .happy-hour-details {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 1rem 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.8rem;
+                align-items: center;
+            }
+
+            nav a {
+                font-size: 0.78rem;
+            }
+
+            .hero {
+                min-height: auto;
+                height: auto;
+                padding-top: 5.5rem;
+            }
+
+            .hero-grid,
+            .lieu-content,
+            .afterwork-content,
+            .contact-grid,
+            .cocktail-hero,
+            .carte-hero,
+            .menu-list,
+            .cocktail-gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-grid {
+                gap: 1.5rem;
+            }
+
+            .hero-content {
+                padding: 0 0.5rem;
+            }
+
+            .hero-content h1 {
+                font-size: clamp(2rem, 9vw, 3rem);
+            }
+
+            .hero-content p,
+            .carte-hero-copy,
+            .cocktail-desc {
+                font-size: 0.95rem;
+            }
+
+            .hero-buttons,
+            .form-row,
+            .cocktail-days,
+            .happy-hour-details {
+                gap: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .highlight-box,
+            .form-content,
+            .carte-hero,
+            .cocktail-hero {
+                padding: 1.5rem 1rem;
+            }
+
+            .carte-hero {
+                max-width: 100%;
+            }
+
+            .carte-hero-text {
+                text-align: left;
+            }
+
+            .carte-hero-images {
+                grid-template-columns: 1fr;
+            }
+
+            .carte-hero-copy {
+                max-width: 100%;
+                margin: 0 0 1rem;
+            }
+
+            .carte-hero-images .cocktail-gallery-card,
+            .carte-hero-images .cocktail-photo {
+                min-height: auto;
+                max-height: none;
+            }
+
+            .cocktail-photo img,
+            .carte-hero-images .cocktail-gallery-card img {
+                width: 100%;
+                height: auto;
+            }
+
+            .cocktail-day,
+            .limited-badge,
+            .cta-button,
+            .button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .form-popup {
+                padding: 1rem;
+            }
+
+            .form-content {
+                width: min(100%, 92vw);
+                padding: 1.25rem;
+            }
+
+            .map-placeholder iframe,
+            iframe {
+                min-height: 240px;
+            }
+
+            footer {
+                padding: 2rem 1rem;
+                text-align: center;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Section spacing for nav */
+        section[id] {
+            scroll-margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#lieu">Le Lieu</a></li>
+            <li><a href="#programmation">Programmation</a></li>
+            <li><a href="#ete">Été</a></li>
+            <li><a href="#afterwork">Afterwork</a></li>
+            <li><a href="#cocktail">Cocktail</a></li>
+            <li><a href="#carte">La Carte</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero / Accueil -->
+    <section id="accueil" class="hero">
+        <div class="hero-bg-carousel">
+            <div class="carousel" id="heroCarousel">
+                <div class="carousel-track">
+                    <div class="carousel-slide">
+                        <img src="images/le-winston-banniere-accueil.png" alt="Le Winston soirée d'accueil">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/guitare-basse-lumi%C3%A8re-tamis%C3%A9e.png" alt="Guitare basse lumineuse">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/pont-historique-%20de-gien-la-nuit.png" alt="Pont historique de Gien la nuit">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/robinet-de%20grimbergen-rouge.png" alt="Robinet de Grimbergen rouge">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/taps-de-biere%20dans-un-pub-winston.png" alt="Taps de bière dans le pub Winston">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/terrasse-de-pub-sous%20les%20arches-winston.png" alt="Terrasse de pub sous les arches Winston">
+                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <button class="carousel-dot active" data-index="0" aria-label="Slide 1"></button>
+                    <button class="carousel-dot" data-index="1" aria-label="Slide 2"></button>
+                    <button class="carousel-dot" data-index="2" aria-label="Slide 3"></button>
+                    <button class="carousel-dot" data-index="3" aria-label="Slide 4"></button>
+                    <button class="carousel-dot" data-index="4" aria-label="Slide 5"></button>
+                    <button class="carousel-dot" data-index="5" aria-label="Slide 6"></button>
+                </div>
+            </div>
+        </div>
+        <div class="hero-content">
+            <img src="images/lewinstonlogo-site.png" alt="Logo Le Winston" class="logo-hero">
+            <h1>Le Winston</h1>
+            <p>Pub bord de Loire. Bois brut, pierre ancienne, rires sans fin. Un lieu simple, chaleureux, vivant.</p>
+            <a href="#lieu" class="cta-button">Découvrir le lieu</a>
+        </div>
+    </section>
+
+    <!-- Le Lieu -->
+    <section id="lieu">
+        <h2>Le Lieu</h2>
+        <div class="lieu-content">
+            <div class="lieu-text">
+                <p><strong>Le Winston</strong>, c’est d’abord une histoire de matières. Des poutres en chêne massif qui ont vu passer des décennies, des murs en pierre de Loire qui retiennent la chaleur des soirées, un bar en bois brut où les verres laissent des traces qui racontent les conversations.</p>
+
+                <p>On est au bord de l’eau, presque. Assez près pour sentir l’humidité du fleuve le soir, assez loin pour être au sec. Une terrasse qui regarde la Loire couler, des guirlandes qui s’allument quand le jour baisse, une musique qui ne couvre jamais les voix.</p>
+
+                <p>C’est un pub sans chichis. Des habitués qui entrent sans frapper, des groupes d’amis qui s’installent pour la soirée, des collègues qui décompressent, des inconnus qui deviennent voisins de table. La convivialité n’est pas un concept ici, c’est une conséquence.</p>
+
+                <p>Et puis il y a <strong>Reynald</strong>.</p>
+
+                <p>Bassiste dans l’âme, amoureux du rock mais jamais fermé aux autres sons. Toujours une anecdote, une blague, un souvenir de concert ou une référence de film à sortir au bon moment. Discuter avec lui, c’est naviguer entre les époques, passer d’un classique oublié à une découverte inattendue, sans jamais perdre le fil.</p>
+
+                <p>Ici, on ne vient pas seulement boire un verre. On vient pour l’ambiance, pour les échanges, pour ces moments qui glissent sans qu’on les voie passer.</p>
+
+                <p><strong>La musique ? Du rock, du blues</strong>, des classiques qu’on chante entre les gorgées, des jeux de société pour sympathiser autrement. Rien d’agressif, juste ce qu’il faut pour donner le tempo sans imposer le volume.</p>
+
+                <p><strong>Le Winston, c’est aussi ça. Un lieu…</strong> et ceux qui le font vivre.</p>
+
+                <div class="lieu-features">
+                    <div class="feature">
+                        <h4>Bois & Pierre</h4>
+                        <p>Matériaux bruts, authenticité préservée</p>
+                    </div>
+                    <div class="feature">
+                        <h4>Terrasse Loire</h4>
+                        <p>Vue sur le fleuve, soirs d'été</p>
+                    </div>
+                    <div class="feature">
+                        <h4>HABITUÉS</h4>
+                        <p>Une communauté, pas une clientèle</p>
+                    </div>
+                    <div class="feature">
+                        <h4>Simplicité</h4>
+                        <p>Bons produits, bonne ambiance, point final</p>
+                    </div>
+                </div>
+            </div>
+            <div class="lieu-visual">
+                <div class="lieu-carousel">
+                    <div class="lieu-carousel-track">
+                        <div class="lieu-carousel-slide">
+                            <img src="images/reynald.png" alt="Reynald au Winston">
+                        </div>
+                        <div class="lieu-carousel-slide">
+                            <img src="images/escalier-murs-de-vinyles.png" alt="Escalier et murs de vinyles">
+                        </div>
+                        <div class="lieu-carousel-slide">
+                            <img src="images/gallery-1.png" alt="Photo galerie 1 du Winston">
+                        </div>
+                        <div class="lieu-carousel-slide">
+                            <img src="images/gallery-2.png" alt="Photo galerie 2 du Winston">
+                        </div>
+                        <div class="lieu-carousel-slide">
+                            <img src="images/robinet-de%20grimbergen-rouge.png" alt="Robinet de Grimbergen rouge">
+                        </div>
+                        <div class="lieu-carousel-slide">
+                            <img src="images/taps-de-biere%20dans-un-pub-winston.png" alt="Taps de bière dans un pub Winston">
+                        </div>
+                        <div class="lieu-carousel-slide">
+                            <img src="images/verre-jeu-en-bois.png" alt="Verre et jeu en bois au Winston">
+                        </div>
+                        <div class="lieu-carousel-slide">
+                            <img src="images/le-winston-banniere-accueil.png" alt="Bannière accueil Le Winston">
+                        </div>
+                        <div class="lieu-carousel-slide">
+                            <img src="images/terrasse-de-pub-sous%20les%20arches-winston.png" alt="Terrasse du Winston sous les arches">
+                        </div>
+                        <div class="lieu-carousel-slide">
+                            <img src="images/gallery-4.png" alt="Photo galerie 4 du Winston">
+                        </div>
+                    </div>
+                    <div class="lieu-carousel-dots">
+                        <button class="lieu-carousel-dot active" data-index="0" aria-label="Slide 1"></button>
+                        <button class="lieu-carousel-dot" data-index="1" aria-label="Slide 2"></button>
+                        <button class="lieu-carousel-dot" data-index="2" aria-label="Slide 3"></button>
+                        <button class="lieu-carousel-dot" data-index="3" aria-label="Slide 4"></button>
+                        <button class="lieu-carousel-dot" data-index="4" aria-label="Slide 5"></button>
+                        <button class="lieu-carousel-dot" data-index="5" aria-label="Slide 6"></button>
+                        <button class="lieu-carousel-dot" data-index="6" aria-label="Slide 7"></button>
+                        <button class="lieu-carousel-dot" data-index="7" aria-label="Slide 8"></button>
+                        <button class="lieu-carousel-dot" data-index="8" aria-label="Slide 9"></button>
+                        <button class="lieu-carousel-dot" data-index="9" aria-label="Slide 10"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programmation -->
+    <section id="programmation">
+        <h2>Programmation</h2>
+        <div class="prog-grid">
+            <div class="day-card">
+                <div class="day-name">Lundi</div>
+                <div class="day-theme">Calme vivant</div>
+                <div class="day-desc">La semaine commence doucement. Ambiance feutrée, conversations tranquilles, lumière tamisée. Pour ceux qui aiment les débuts sans fracas.</div>
+            </div>
+            <div class="day-card">
+                <div class="day-name">Mardi</div>
+                <div class="day-theme">Jeux & détente</div>
+                <div class="day-desc">Soirée jeux de société, cartes, fléchettes. La terrasse s'anime, les groupes se forment autour des tables. Rires garantis, compétition amicale.</div>
+            </div>
+            <div class="day-card">
+                <div class="day-name">Mercredi</div>
+                <div class="day-theme">Karaoké</div>
+                <div class="day-desc">Micro ouvert, inhibitions fermées. Du classique rock aux tubes oubliés, tout le monde chante, tout le monde applaudit. Pas de jugement, que du soutien.</div>
+            </div>
+            <div class="day-card">
+                <div class="day-name">Jeudi</div>
+                <div class="day-theme">Afterwork + Cocktail</div>
+                <div class="day-desc">Le début du week-end commence jeudi ici. Happy hour étendu, cocktail signature de la semaine, ambiance montante. Les collègues deviennent amis.</div>
+            </div>
+            <div class="day-card">
+                <div class="day-name">Vendredi</div>
+                <div class="day-theme">Son + Cocktail</div>
+                <div class="day-desc">Volume un cran au-dessus, énergie décuplée. DJ set ou playlist soignée, cocktail signature encore disponible. La soirée s'annonce longue et belle.</div>
+            </div>
+            <div class="day-card">
+                <div class="day-name">Samedi</div>
+                <div class="day-theme">Winston vivant</div>
+                <div class="day-desc">L'apogée de la semaine. Toutes les tables pleines, la terrasse en ébullition, la musique qui pulse, les conversations qui se mêlent. Le Winston dans toute sa splendeur.</div>
+            </div>
+            <div class="day-card clickable-card" onclick="openSundayForm()">
+                <div class="day-name">Dimanche</div>
+                <div class="day-theme">Sur demande</div>
+                <div class="day-desc">
+                    Pour ceux qui veulent prolonger le week-end sans le brusquer. Le Winston ouvre aussi le dimanche… mais seulement si on nous le demande.
+                    À partir de 15 personnes, on peut privatiser le lieu pour un moment à part : anniversaire, retrouvailles, soirée tranquille entre proches.
+                    <br><br><strong>Cliquez pour faire une demande.</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programmation Été -->
+    <section id="ete" style="background: var(--color-bg-light);">
+        <h2>Les Soirs de Loire</h2>
+        <p class="summer-intro">Quand l'été arrive, le Winston se déploie. La terrasse devient le cœur du lieu, la Loire devient voisine, et chaque soir prend des couleurs de vacances. Voici le rythme estival du Winston.</p>
+
+        <div class="prog-grid summer-grid">
+            <div class="day-card">
+                <div class="summer-badge">Été 2026</div>
+                <div class="day-name">Lundi</div>
+                <div class="day-theme">Calme vivant</div>
+                <div class="day-desc">La chaleur de la journée retombe. Terrasse ombragée, brise du fleuve, première bière fraîche. Le calme avant la tempête de la semaine.</div>
+            </div>
+            <div class="day-card">
+                <div class="summer-badge">Été 2026</div>
+                <div class="day-name">Mardi</div>
+                <div class="day-theme">Jeux & Terrasse</div>
+                <div class="day-desc">Un mardi simple, comme on les aime. La terrasse est ouverte, face à la Loire. On prend le temps. Cartes, dames, petits jeux… À deux ou à plusieurs, selon l’envie. Un verre à la main, une planche au milieu, et la soirée se fait doucement.</div>
+            </div>
+            <div class="day-card">
+                <div class="summer-badge">Été 2026</div>
+                <div class="day-name">Mercredi</div>
+                <div class="day-theme">Karaoké d'été</div>
+                <div class="day-desc">Micro en terrasse, reprises acoustiques, chœurs spontanés. Les passants s'arrêtent, certains entrent. La magie des soirs d'été en bord de Loire.</div>
+            </div>
+            <div class="day-card">
+                <div class="summer-badge">Été 2026</div>
+                <div class="day-name">Jeudi</div>
+                <div class="day-theme">Afterwork + Cocktail</div>
+                <div class="day-desc">L'afterwork estival : décontracté, en extérieur, cocktail fruité à la main. Le coucher de soleil sur la Loire en prime. Le meilleur début de week-end.</div>
+            </div>
+            <div class="day-card">
+                <div class="summer-badge">Été 2026</div>
+                <div class="day-name">Vendredi</div>
+                <div class="day-theme">Son + Cocktail</div>
+                <div class="day-desc">Musique extérieure, ambiance festive, cocktail de la semaine en édition limitée. La terrasse déborde, la soirée s'étire jusqu'à tard.</div>
+            </div>
+            <div class="day-card">
+                <div class="summer-badge">Été 2026</div>
+                <div class="day-name">Samedi</div>
+                <div class="day-theme">Winston vivant</div>
+                <div class="day-desc">L'été à son apogée. Terrasse pleine, bar animé, quai qui vit. L'esprit guinguette sans la guinguette. Le Winston en version estivale maximale.</div>
+            </div>
+            <div class="day-card">
+                <div class="summer-badge">Été 2026</div>
+                <div class="day-name">Dimanche au Winston</div>
+                <div class="day-theme">Fin douce possible</div>
+                <div class="day-desc">Parfois, on ouvre. Et cette envie… elle vient de vous. À partir de 15 personnes, privatisation possible (bar ou terrasse). Animation et playlist au choix.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Afterwork -->
+    <section id="afterwork">
+        <h2>Afterwork</h2>
+        <div class="afterwork-content">
+            <div class="afterwork-info">
+                <h3>Le rendez-vous des équipes</h3>
+                <p>Le jeudi, le Winston devient le QG des afterworks. Entre collègues, entre amis, entre départements — c'est le moment où la hiérarchie s'efface et où les vraies conversations commencent.</p>
+
+                <ul class="afterwork-list">
+                    <li>Happy hour de 17h à 20h</li>
+                    <li>Planches à partager pour l'équipe</li>
+                    <li>Jeux de société pour briser la glace</li>
+                    <li>Ambiance détendue, pas de dress code</li>
+                    <li>Terrasse disponible pour les gros groupes</li>
+                    <li>Réservation possible pour garantir l'espace</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <h4>Formule Afterwork</h4>
+                    <div class="price">Pinte + Planche = 20€</div>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">De 17h à 20h, du jeudi au vendredi</p>
+                </div>
+
+                <button type="button" class="cta-button" onclick="openForm()">Organiser un afterwork</button>
+            </div>
+            <div class="lieu-visual" style="background: url('images/entreprise.png') center/cover no-repeat;">
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🍻</div>
+                    <div style="font-family: var(--font-title); font-size: 1.5rem; color: var(--color-winston-blue); font-weight: 700;">Votre équipe<br>mérite le Winston</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cocktail Signature -->
+    <section id="cocktail">
+        <h2>Cocktail Signature</h2>
+
+        <div class="cocktail-hero">
+            <p class="cocktail-subtitle">Cocktail Signature</p>
+
+            <h3 class="cocktail-main-title">Le Secret du Winston</h3>
+
+            <div class="cocktail-name">Le Mystère de Loire</div>
+
+            <p class="cocktail-desc">
+                Chaque semaine, notre barman crée un cocktail unique.
+                Une recette inédite, des saveurs surprenantes, une présentation soignée.
+                Disponible en quantité limitée. Une fois épuisé, il faudra attendre la semaine suivante.
+            </p>
+
+            <div class="cocktail-days">
+                <span>Jeudi</span>
+                <span>Vendredi</span>
+            </div>
+        </div>
+
+        <div class="carte-hero">
+            <div class="carte-hero-text">
+                <h3>Le Cocktail du Moment</h3>
+                <div class="cocktail-moment">Mystère de Loire</div>
+                <p class="carte-hero-copy">Recette unique qui change chaque semaine. Disponible jeudi et vendredi uniquement.</p>
+                <div class="limited-badge">Quantité Limitée</div>
+            </div>
+            <div class="carte-hero-images">
+                <div class="cocktail-gallery-card">
+                    <img src="images/cocktail.png" alt="Cocktail du Winston">
+                    <h4>Mystère de Loire</h4>
+                    <p>Le cocktail actuellement proposé cette semaine.</p>
+                </div>
+                <div class="cocktail-photo">
+                    <img src="images/cocktail-lumineux-au-bar-winston.png" alt="Cocktail lumineux au bar Winston">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- La Carte -->
+    <section id="carte">
+        <h2>La Carte</h2>
+        <div class="menu-section carte-jaune">
+            <div class="carte-list">
+                <div class="carte-block"><span class="carte-emoji">🍺</span> <span class="carte-titre">BIÈRES PRESSION</span><br>
+                    <span class="carte-sous">Classiques</span><br>
+                    Carlsberg <span class="carte-prix">→ 4€ / 7€</span><br>
+                    1664 Blanche <span class="carte-prix">→ 5€ / 9€</span><br>
+                    Grimbergen Rouge / Saison <span class="carte-prix">→ 5€ / 9€</span><br>
+                    <span class="carte-sous">Bières de caractère</span><br>
+                    La Bête <span class="carte-prix">→ 5€ / 8€</span><br>
+                    Brooklyn IPA <span class="carte-prix">→ 5,50€ / 10€</span><br>
+                    Grimbergen Blonde <span class="carte-prix">→ 5€ / 9€</span>
+                </div>
+                <div class="carte-block"><span class="carte-emoji">🍸</span> <span class="carte-titre">APÉRITIFS</span><br>
+                    Ricard / Pastis <span class="carte-prix">→ 4€</span><br>
+                    Perroquet Sauvage <span class="carte-prix">→ 6,50€</span><br>
+                    Porto Rouge <span class="carte-prix">→ 6€</span><br>
+                    Martini Rouge/Blanc <span class="carte-prix">→ 6€</span><br>
+                    Campari <span class="carte-prix">→ 6€</span><br>
+                    Suze <span class="carte-prix">→ 5,50€</span><br>
+                    Kir <span class="carte-prix">→ 6€</span><br>
+                    <span class="carte-sous">Supplément</span> <span class="carte-prix">→ 0,50€</span><br>
+                    Picon <span class="carte-prix">→ 1€</span>
+                </div>
+                <div class="carte-block"><span class="carte-emoji">🍸</span> <span class="carte-titre">SPIRITUEUX</span><br>
+                    <span class="carte-sous">Vodka / Gin / Tequila</span><br>
+                    Absolut <span class="carte-prix">→ 6€</span><br>
+                    Absolut parfumée <span class="carte-prix">→ 6,50€</span><br>
+                    Cîroc <span class="carte-prix">→ 8,50€</span><br>
+                    Bombay Sapphire <span class="carte-prix">→ 6,50€</span><br>
+                    Gibson’s <span class="carte-prix">→ 6€</span><br>
+                    Tequila <span class="carte-prix">→ 5,50€</span><br>
+                    Mezcal <span class="carte-prix">→ 8€</span>
+                </div>
+                <div class="carte-block"><span class="carte-emoji">🥃</span> <span class="carte-titre">RHUMS</span><br>
+                    Saint James Blanc/Ambré <span class="carte-prix">→ 6€</span><br>
+                    Havana Blanc/Ambré <span class="carte-prix">→ 7€</span><br>
+                    Captain Morgan <span class="carte-prix">→ 7€</span><br>
+                    Bumbu <span class="carte-prix">→ 9€</span><br>
+                    Don Papa <span class="carte-prix">→ 9,50€</span><br>
+                    Plantation <span class="carte-prix">→ 8€</span><br>
+                    Diplomatico <span class="carte-prix">→ 9€</span><br>
+                    Kraken <span class="carte-prix">→ 7,50€</span><br>
+                    3 Rivières <span class="carte-prix">→ 7€</span><br>
+                    Rhum arrangé <span class="carte-prix">→ 8€</span>
+                </div>
+                <div class="carte-block"><span class="carte-emoji">🥃</span> <span class="carte-titre">WHISKIES</span><br>
+                    Clan Campbell <span class="carte-prix">→ 6€</span><br>
+                    Jack Daniel’s <span class="carte-prix">→ 7,50€</span><br>
+                    Jack Honey / Apple <span class="carte-prix">→ 7,50€</span><br>
+                    Aberlour / Cardhu / Chivas <span class="carte-prix">→ 9€</span><br>
+                    Slane <span class="carte-prix">→ 7€</span><br>
+                    Connemara / Haig <span class="carte-prix">→ 9€</span><br>
+                    Sexton <span class="carte-prix">→ 7,50€</span><br>
+                    Monkey Shoulder <span class="carte-prix">→ 7€</span><br>
+                    Copper Dog <span class="carte-prix">→ 7,50€</span>
+                </div>
+                <div class="carte-block"><span class="carte-emoji">🍷</span> <span class="carte-titre">VINS</span><br>
+                    Menetou-Salon <span class="carte-prix">→ 6€ / 35€</span><br>
+                    Cote de Provence <span class="carte-prix">→ 5€ / 25€</span><br>
+                    Chinon <span class="carte-prix">→ 5€ / 25€</span><br>
+                    Monbazillac <span class="carte-prix">→ 5,50€ / 25€</span><br>
+                    Coteaux du Giennois <span class="carte-prix">→ 6€ / 35€</span>
+                </div>
+                <div class="carte-block"><span class="carte-titre">LIQUEUR</span><br>
+                    Get 27 et 31Bailey's <span class="carte-prix">→ 6€</span><br>
+                    Bailey's <span class="carte-prix">→ 6€</span><br>
+                    Malibu <span class="carte-prix">→ 6€</span><br>
+                    Triple Sec <span class="carte-prix">→ 4,5€</span><br>
+                    Vieille Prune <span class="carte-prix">→ 7,5€</span><br>
+                    Cognac ABK6 <span class="carte-prix">→ 7€</span>
+                </div>
+                <div class="carte-block"><span class="carte-titre">SOFT</span><br>
+                    Coca <span class="carte-prix">→ 4,50€</span><br>
+                    Ice Tea <span class="carte-prix">→ 4,50€</span><br>
+                    Orangina <span class="carte-prix">→ 4,50€</span><br>
+                    Perrier <span class="carte-prix">→ 4,50€</span><br>
+                    Schweppes Tonic <span class="carte-prix">→ 4,50€</span><br>
+                    Schweppes Agrum <span class="carte-prix">→ 4,50€</span><br>
+                    Soft exotic (pour les curieux) <span class="carte-prix">→ 4,50€</span>
+                </div>
+                <div class="carte-block carte-happy">
+                    <span class="carte-emoji">⏰</span> <span class="carte-titre">HAPPY HOUR (RAPPEL)</span><br>
+                    17h – 20h<br>
+                    <span class="carte-happy-item">Pinte <span class="carte-prix">7€</span></span><br>
+                    <span class="carte-happy-item">Demi <span class="carte-prix">4€</span></span><br>
+                    <span class="carte-happy-item">Pinte + planche <span class="carte-prix">20€</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <h2>Contact</h2>
+
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-icon">📍</div>
+                <h4>Adresse</h4>
+                <p>8 Quai Lenoir<br>45500 Gien</p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">📞</div>
+                <h4>Téléphone</h4>
+                <p>06 73 28 58 18</p>
+            </div>
+            <div class="contact-card contact-email-card">
+                <div class="contact-icon">📧</div>
+                <h4>Email</h4>
+                <p>winstongien45500@gmail.com</p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">🕐</div>
+                <h4>Horaires</h4>
+                <p>Lun–Jeu : 17h–00h<br>Ven–Sam : 17h–02h<br>Dim : Fermé (ouverture possible)</p>
+            </div>
+        </div>
+
+        <form action="https://formspree.io/f/xdayaglo" method="POST" class="contact-form">
+            <input type="text" name="nom" placeholder="Votre nom" required>
+            <input type="email" name="email" placeholder="Votre email" required>
+            <textarea name="message" placeholder="Votre message..." required></textarea>
+            <button type="submit">Envoyer</button>
+        </form>
+
+        <div class="map-placeholder">
+            <iframe
+                src="https://www.google.com/maps?q=8+Quai+Lenoir+45500+Gien&z=17&output=embed"
+                width="100%"
+                height="100%"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
+
+    <div id="formPopup" class="form-popup" aria-hidden="true">
+        <div class="form-content">
+            <button type="button" class="close-btn" onclick="closeForm()" aria-label="Fermer">×</button>
+
+            <h2>Réserver votre soirée au Winston</h2>
+            <p class="form-intro">
+                Dites-nous ce que vous avez en tête. On vous recontacte rapidement pour organiser ça proprement.
+            </p>
+
+            <form action="https://formspree.io/f/xdayaglo" method="POST" class="afterwork-form">
+                <input type="hidden" name="_subject" value="Nouvelle demande Afterwork - Le Winston">
+
+                <div class="form-row">
+                    <label for="nom">Nom</label>
+                    <input type="text" id="nom" name="Nom" placeholder="Votre nom" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="Email" placeholder="Votre email" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="telephone">Téléphone</label>
+                    <input type="tel" id="telephone" name="Téléphone" placeholder="Votre numéro">
+                </div>
+
+                <div class="form-row two-cols">
+                    <div>
+                        <label for="date">Date souhaitée</label>
+                        <input type="date" id="date" name="Date souhaitée" required>
+                    </div>
+
+                    <div>
+                        <label for="personnes">Nombre de personnes</label>
+                        <input type="number" id="personnes" name="Nombre de personnes" min="10" placeholder="10 minimum" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label for="type-evenement">Type de moment</label>
+                    <select id="type-evenement" name="Type d'événement" required>
+                        <option value="">Choisir</option>
+                        <option value="Afterwork">Afterwork</option>
+                        <option value="Anniversaire">Anniversaire</option>
+                        <option value="Retrouvailles entre amis">Retrouvailles entre amis</option>
+                        <option value="Soirée d'équipe">Soirée d'équipe</option>
+                        <option value="Privatisation du dimanche">Privatisation du dimanche</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="horaire">Horaire souhaité</label>
+                    <input type="text" id="horaire" name="Horaire souhaité" placeholder="Ex : 19h30">
+                </div>
+
+                <div class="form-row">
+                    <label for="message">Votre demande</label>
+                    <textarea id="message" name="Message" rows="6" placeholder="Parlez-nous de votre soirée..." required></textarea>
+                </div>
+
+                <button type="submit" class="form-submit">Envoyer la demande</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="sundayPopup" class="form-popup" aria-hidden="true">
+        <div class="form-content">
+            <button type="button" class="close-btn" onclick="closeSundayForm()" aria-label="Fermer">×</button>
+
+            <h2>Réserver un dimanche au Winston</h2>
+            <p class="form-intro">
+                Vous souhaitez privatiser le Winston un dimanche ? Dites-nous ce que vous avez en tête.
+            </p>
+
+            <form action="https://formspree.io/f/xdayaglo" method="POST" class="afterwork-form">
+                <input type="hidden" name="_subject" value="Nouvelle demande Dimanche privatisable - Le Winston">
+
+                <div class="form-row">
+                    <label for="sunday-name">Nom</label>
+                    <input type="text" id="sunday-name" name="Nom" placeholder="Votre nom" required>
+                </div>
+
+                <div class="form-row two-cols">
+                    <div>
+                        <label for="sunday-email">Email</label>
+                        <input type="email" id="sunday-email" name="Email" placeholder="Votre email" required>
+                    </div>
+                    <div>
+                        <label for="sunday-phone">Téléphone</label>
+                        <input type="tel" id="sunday-phone" name="Téléphone" placeholder="Votre numéro">
+                    </div>
+                </div>
+
+                <div class="form-row two-cols">
+                    <div>
+                        <label for="sunday-date">Date souhaitée</label>
+                        <input type="date" id="sunday-date" name="Date souhaitée" required>
+                    </div>
+                    <div>
+                        <label for="sunday-people">Nombre de personnes</label>
+                        <input type="number" id="sunday-people" name="Nombre de personnes" min="15" placeholder="15 minimum" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label for="sunday-event">Type de moment</label>
+                    <select id="sunday-event" name="Type de moment" required>
+                        <option value="">Choisir</option>
+                        <option value="Anniversaire">Anniversaire</option>
+                        <option value="Retrouvailles">Retrouvailles</option>
+                        <option value="Soirée entre proches">Soirée entre proches</option>
+                        <option value="Moment en famille">Moment en famille</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="sunday-drinks">Boissons souhaitées</label>
+                    <input type="text" id="sunday-drinks" name="Boissons souhaitées" placeholder="Bières, vin, softs, cocktail signature...">
+                </div>
+
+                <div class="form-row">
+                    <label for="sunday-food">Planches souhaitées</label>
+                    <select id="sunday-food" name="Planches souhaitées">
+                        <option value="">Choisir</option>
+                        <option value="Planche de charcuterie">Planche de charcuterie</option>
+                        <option value="Planche mixte">Planche mixte</option>
+                        <option value="Planche fromage">Planche fromage</option>
+                        <option value="À définir ensemble">À définir ensemble</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="sunday-message">Votre demande</label>
+                    <textarea id="sunday-message" name="Message" rows="6" placeholder="Parlez-nous de votre dimanche idéal..." required></textarea>
+                </div>
+
+                <button type="submit" class="form-submit">Envoyer la demande</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p style="font-family: var(--font-title); font-size: 1.5rem; color: var(--color-accent); margin-bottom: 1rem;">Le Winston</p>
+        <p>Pub bord de Loire — Bois, pierre, convivialité</p>
+        <p style="margin-top: 1rem; font-size: 0.8rem;">© 2025 Le Winston Gien. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Carousel accueil
+        const carouselTrack = document.querySelector('.carousel-track');
+        const carouselDots = document.querySelectorAll('.carousel-dot');
+        let currentSlide = 0;
+        const slideCount = carouselDots.length;
+        const slideWidth = carouselTrack ? carouselTrack.clientWidth : 0;
+
+        function updateCarousel(index) {
+            if (!carouselTrack) return;
+            currentSlide = index;
+            carouselTrack.style.transform = `translateX(-${index * 100}%)`;
+            carouselDots.forEach((dot, dotIndex) => {
+                dot.classList.toggle('active', dotIndex === index);
+            });
+        }
+
+        function nextSlide() {
+            const nextIndex = (currentSlide + 1) % slideCount;
+            updateCarousel(nextIndex);
+        }
+
+        carouselDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                updateCarousel(Number(dot.dataset.index));
+            });
+        });
+
+        setInterval(nextSlide, 5000);
+
+        // Lieu carousel
+        const lieuTrack = document.querySelector('.lieu-carousel-track');
+        const lieuDots = document.querySelectorAll('.lieu-carousel-dot');
+        let lieuCurrent = 0;
+        const lieuCount = lieuDots.length;
+
+        function updateLieu(index) {
+            if (!lieuTrack) return;
+            lieuCurrent = index;
+            lieuTrack.style.transform = `translateX(-${index * 100}%)`;
+            lieuDots.forEach((dot, dotIndex) => {
+                dot.classList.toggle('active', dotIndex === index);
+            });
+        }
+
+        function nextLieuSlide() {
+            updateLieu((lieuCurrent + 1) % lieuCount);
+        }
+
+        lieuDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                updateLieu(Number(dot.dataset.index));
+            });
+        });
+
+        setInterval(nextLieuSlide, 5500);
+
+        // Animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.day-card, .contact-card, .menu-category').forEach(el => {
+            observer.observe(el);
+        });
+
+        function openForm() {
+            const popup = document.getElementById('formPopup');
+            if (popup) {
+                popup.style.display = 'flex';
+                popup.setAttribute('aria-hidden', 'false');
+                setDefaultDate();
+                updateMessageTemplate();
+            }
+        }
+
+        function closeForm() {
+            const popup = document.getElementById('formPopup');
+            if (popup) {
+                popup.style.display = 'none';
+                popup.setAttribute('aria-hidden', 'true');
+            }
+        }
+
+        function setDefaultDate() {
+            const dateInput = document.getElementById('date');
+            if (!dateInput || dateInput.value) return;
+            const today = new Date();
+            today.setDate(today.getDate() + 7);
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            dateInput.value = `${yyyy}-${mm}-${dd}`;
+        }
+
+        function updateMessageTemplate() {
+            const date = document.getElementById('date')?.value || '';
+            const personnes = document.getElementById('personnes')?.value || '';
+            const typeEvent = document.getElementById('type-evenement')?.value || '';
+            const horaire = document.getElementById('horaire')?.value || '';
+            const message = document.getElementById('message');
+
+            if (!message) return;
+
+            const template = `Bonjour,
+
+Je souhaite organiser ${typeEvent ? 'un moment de type : ' + typeEvent : 'un moment au Winston'}.
+
+Date souhaitée : ${date || 'à préciser'}
+Horaire souhaité : ${horaire || 'à préciser'}
+Nombre de personnes : ${personnes || 'à préciser'}
+
+Précisions complémentaires :\n`;
+
+            if (
+                message.dataset.userEdited !== 'true' ||
+                message.value.trim() === '' ||
+                message.value.startsWith('Bonjour,')
+            ) {
+                message.value = template;
+                message.dataset.userEdited = 'false';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const watchedFields = ['date', 'personnes', 'type-evenement', 'horaire'];
+            watchedFields.forEach(id => {
+                const field = document.getElementById(id);
+                if (field) {
+                    field.addEventListener('change', updateMessageTemplate);
+                    field.addEventListener('input', updateMessageTemplate);
+                }
+            });
+
+            const message = document.getElementById('message');
+            if (message) {
+                message.addEventListener('input', function () {
+                    this.dataset.userEdited = 'true';
+                });
+            }
+
+            const popup = document.getElementById('formPopup');
+            if (popup) {
+                popup.addEventListener('click', function (e) {
+                    if (e.target === popup) {
+                        closeForm();
+                    }
+                });
+            }
+
+            const sundayPopup = document.getElementById('sundayPopup');
+            if (sundayPopup) {
+                sundayPopup.addEventListener('click', function (e) {
+                    if (e.target === sundayPopup) {
+                        closeSundayForm();
+                    }
+                });
+            }
+        });
+
+        function openSundayForm() {
+            const popup = document.getElementById('sundayPopup');
+            if (popup) {
+                popup.style.display = 'flex';
+                popup.setAttribute('aria-hidden', 'false');
+                setSundayDefaultDate();
+                updateSundayMessageTemplate();
+            }
+        }
+
+        function closeSundayForm() {
+            const popup = document.getElementById('sundayPopup');
+            if (popup) {
+                popup.style.display = 'none';
+                popup.setAttribute('aria-hidden', 'true');
+            }
+        }
+
+        function setSundayDefaultDate() {
+            const dateInput = document.getElementById('sunday-date');
+            if (!dateInput || dateInput.value) return;
+            const today = new Date();
+            today.setDate(today.getDate() + 14);
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            dateInput.value = `${yyyy}-${mm}-${dd}`;
+        }
+
+        function updateSundayMessageTemplate() {
+            const date = document.getElementById('sunday-date')?.value || '';
+            const people = document.getElementById('sunday-people')?.value || '';
+            const eventType = document.getElementById('sunday-event')?.value || '';
+            const message = document.getElementById('sunday-message');
+
+            if (!message) return;
+
+            const template = `Bonjour,
+
+Je souhaite privatiser le Winston un dimanche.
+
+Date souhaitée : ${date || 'à préciser'}
+Nombre de personnes : ${people || 'à préciser'}
+Type de moment : ${eventType || 'à préciser'}
+
+Précisions complémentaires :\n`;
+
+            if (
+                message.dataset.userEdited !== 'true' ||
+                message.value.trim() === '' ||
+                message.value.startsWith('Bonjour,')
+            ) {
+                message.value = template;
+                message.dataset.userEdited = 'false';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const sundayFields = ['sunday-date', 'sunday-people', 'sunday-event'];
+            sundayFields.forEach(id => {
+                const field = document.getElementById(id);
+                if (field) {
+                    field.addEventListener('change', updateSundayMessageTemplate);
+                    field.addEventListener('input', updateSundayMessageTemplate);
+                }
+            });
+
+            const sundayMessage = document.getElementById('sunday-message');
+            if (sundayMessage) {
+                sundayMessage.addEventListener('input', function () {
+                    this.dataset.userEdited = 'true';
+                });
+            }
+
+            const sundayPopup = document.getElementById('sundayPopup');
+            if (sundayPopup) {
+                sundayPopup.addEventListener('click', function (e) {
+                    if (e.target === sundayPopup) {
+                        closeSundayForm();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
