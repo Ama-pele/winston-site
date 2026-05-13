@@ -531,7 +531,7 @@
             }
 
             .lieu-visual {
-                min-height: 520px;
+                min-height: 400px;
             }
         }
 
@@ -884,13 +884,13 @@
         /* La Carte */
         .carte-hero {
             display: grid;
-            grid-template-columns: 1.25fr 0.75fr;
-            gap: 1.2rem;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 1.5rem;
             align-items: start;
             background: linear-gradient(135deg, var(--color-accent) 0%, #b8860b 100%);
             color: var(--color-bg);
             padding: 1.8rem 1.6rem;
-            max-width: 980px;
+            max-width: 1120px;
             margin: 0 auto 2.5rem;
             position: relative;
             overflow: hidden;
@@ -899,6 +899,11 @@
         .carte-hero-text {
             z-index: 1;
             text-align: left;
+        }
+
+        #cocktail .carte-hero-text {
+            align-self: center;
+            text-align: center;
         }
 
         .carte-hero-copy {
@@ -910,12 +915,18 @@
             line-height: 1.6;
         }
 
+        #cocktail .carte-hero-copy {
+            max-width: 420px;
+            margin: 0 auto 1.35rem;
+            font-size: 1.02rem;
+        }
+
         .carte-hero-images {
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 1rem;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.2rem;
             z-index: 1;
-            align-items: start;
+            align-items: stretch;
         }
 
         .carte-hero::after {
@@ -941,9 +952,14 @@
         .cocktail-moment {
             font-family: var(--font-title);
             font-size: 2.5rem;
-            margin: 1rem 0;
+            margin: 1.15rem auto 0.3rem;
             position: relative;
             z-index: 1;
+        }
+
+        #cocktail .cocktail-moment {
+            max-width: 460px;
+            line-height: 1.08;
         }
 
         .limited-badge {
@@ -1058,13 +1074,68 @@
             font-weight: 600;
             margin-left: 0.3em;
         }
+        .carte-vins {
+            line-height: 2.15;
+        }
+        .carte-vins .carte-emoji {
+            font-size: 1.45em;
+        }
+        .carte-vins .carte-titre {
+            font-size: 1.38em;
+        }
+        .vin-item {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0.7rem;
+            color: var(--color-text);
+            font-size: 1.12em;
+        }
+        .vin-name {
+            flex: 1;
+            font-weight: 600;
+        }
+        .vin-emoji {
+            display: inline-block;
+            min-width: 1.55em;
+            font-size: 1.28em;
+            line-height: 1;
+        }
+        .carte-vins .carte-prix {
+            font-size: 1.04em;
+        }
         .carte-happy {
-            background: rgba(255,215,0,0.08);
+            min-width: 300px;
+            background: linear-gradient(180deg, rgba(255,215,0,0.14), rgba(255,215,0,0.06));
             border: 1.5px dashed var(--color-accent-light);
+            text-align: center;
+            line-height: 1.75;
         }
         .carte-happy-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
             font-weight: 600;
             color: var(--color-accent-light);
+            font-size: 1.08em;
+        }
+        .carte-happy .carte-titre {
+            display: inline-block;
+            margin-bottom: 0.45rem;
+            font-size: 1.26em;
+        }
+        .happy-time {
+            display: block;
+            margin: 0.35rem 0 0.8rem;
+            font-family: var(--font-title);
+            font-size: 1.65em;
+            font-weight: 700;
+            color: var(--color-accent-light);
+        }
+        .happy-days {
+            display: block;
+            color: var(--color-text);
+            font-weight: 700;
         }
         @media (max-width: 900px) {
             .carte-list {
@@ -1330,6 +1401,10 @@
                 text-align: left;
             }
 
+            #cocktail .carte-hero-text {
+                text-align: center;
+            }
+
             .carte-hero-images {
                 grid-template-columns: 1fr;
             }
@@ -1398,6 +1473,404 @@
         section[id] {
             scroll-margin-top: 80px;
         }
+
+        /* RESPONSIVE GLOBAL */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .hero {
+            min-height: 100svh;
+        }
+
+        .lieu-visual {
+            height: clamp(420px, 72vw, 840px);
+        }
+
+        .afterwork-content .lieu-visual {
+            height: clamp(360px, 45vw, 560px);
+            min-height: 0;
+        }
+
+        .carousel,
+        .carousel-track,
+        .carousel-slide,
+        .lieu-carousel,
+        .lieu-carousel-track,
+        .lieu-carousel-slide {
+            height: 100%;
+        }
+
+        .carousel-slide img,
+        .lieu-carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cocktail-gallery-card img {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            height: clamp(220px, 36vw, 360px);
+            object-fit: cover;
+        }
+
+        .carte-hero-images .cocktail-gallery-card,
+        .carte-hero-images .cocktail-photo {
+            aspect-ratio: 3 / 4;
+            background: rgba(10, 22, 40, 0.18);
+            min-height: 0;
+            max-height: none;
+        }
+
+        .carte-hero-images .cocktail-gallery-card img,
+        .carte-hero-images .cocktail-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        section {
+            width: 100%;
+        }
+
+        /* Tablette */
+        @media (max-width: 900px) {
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .lieu-content,
+            .afterwork-content,
+            .carte-hero,
+            .contact-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .lieu-visual {
+                height: clamp(340px, 70vw, 520px);
+                min-height: 0;
+            }
+        }
+
+        /* Téléphone */
+        @media (max-width: 600px) {
+            nav {
+                position: relative;
+                padding: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.7rem;
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 4rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .prog-grid,
+            .cocktail-gallery-grid,
+            .menu-list,
+            .contact-grid,
+            .carte-list {
+                grid-template-columns: 1fr !important;
+            }
+
+            .day-card,
+            .contact-card,
+            .carte-block,
+            .drink-card {
+                width: 100%;
+            }
+
+            .lieu-visual {
+                height: clamp(300px, 88vw, 420px);
+                min-height: 0;
+            }
+
+            .afterwork-content .lieu-visual {
+                height: clamp(260px, 82vw, 360px);
+            }
+
+            .cocktail-gallery-card img,
+            .carte-hero-images .cocktail-gallery-card,
+            .carte-hero-images .cocktail-photo {
+                aspect-ratio: 3 / 4;
+            }
+
+            .logo-hero {
+                width: 110px;
+                height: 110px;
+            }
+
+            /* Carte extremely responsive */
+            .drink-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.4rem;
+            }
+
+            .drink-price {
+                text-align: left;
+            }
+
+            .nav-quick {
+                overflow-x: auto;
+                justify-content: flex-start;
+                flex-wrap: nowrap;
+            }
+
+            .nav-quick a {
+                white-space: nowrap;
+            }
+        }
+
+        /* Responsive final avant publication */
+        @media (max-width: 1100px) {
+            section {
+                max-width: 100%;
+                padding-left: clamp(1rem, 4vw, 2rem);
+                padding-right: clamp(1rem, 4vw, 2rem);
+            }
+
+            .lieu-content {
+                grid-template-columns: 1fr;
+            }
+
+            .lieu-visual {
+                max-height: none;
+            }
+        }
+
+        @media (max-width: 900px) {
+            nav {
+                position: relative;
+                padding: 0.9rem 1rem;
+            }
+
+            nav ul {
+                gap: 0.75rem 1rem;
+            }
+
+            nav a {
+                font-size: 0.78rem;
+            }
+
+            section[id] {
+                scroll-margin-top: 20px;
+            }
+
+            .hero {
+                min-height: 88svh;
+                height: auto;
+                padding: 4rem 1rem;
+            }
+
+            .afterwork-content,
+            .carte-hero,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .carte-hero {
+                gap: 1.5rem;
+            }
+
+            .carte-hero-images {
+                max-width: 620px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 700px) {
+            nav ul {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                text-align: center;
+            }
+
+            nav a {
+                display: block;
+                padding: 0.2rem 0;
+                letter-spacing: 0.5px;
+            }
+
+            .hero {
+                min-height: 78svh;
+                padding: 3rem 1rem;
+            }
+
+            .hero h1 {
+                max-width: 100%;
+                font-size: clamp(2.35rem, 12vw, 3.25rem);
+                letter-spacing: 0;
+                overflow-wrap: normal;
+            }
+
+            .logo-hero {
+                width: clamp(104px, 28vw, 132px);
+                height: clamp(104px, 28vw, 132px);
+            }
+
+            section {
+                padding-top: 3.5rem;
+                padding-bottom: 3.5rem;
+            }
+
+            h2 {
+                margin-bottom: 2rem;
+                overflow-wrap: anywhere;
+            }
+
+            .lieu-text,
+            .summer-intro {
+                font-size: 1rem;
+            }
+
+            .lieu-features,
+            .prog-grid,
+            .contact-grid,
+            .menu-list {
+                grid-template-columns: 1fr;
+            }
+
+            .highlight-box .price {
+                font-size: clamp(1.7rem, 9vw, 2.35rem);
+            }
+
+            .cocktail-hero {
+                padding: 3rem 1rem;
+            }
+
+            .cocktail-main-title {
+                font-size: clamp(2rem, 10vw, 2.8rem);
+            }
+
+            .cocktail-name {
+                font-size: clamp(1.45rem, 8vw, 2rem);
+            }
+
+            .carte-hero {
+                padding: 1.4rem 1rem;
+            }
+
+            .carte-hero-images {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+
+            .cocktail-moment {
+                font-size: clamp(1.65rem, 8vw, 2.2rem);
+            }
+
+            .carte-list {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .carte-block,
+            .carte-happy {
+                min-width: 0;
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 520px) {
+            nav ul {
+                grid-template-columns: 1fr;
+                gap: 0.45rem;
+            }
+
+            nav a {
+                font-size: 0.76rem;
+            }
+
+            .hero h1 {
+                font-size: clamp(2.25rem, 13vw, 3rem);
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 2.4rem 0.9rem;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .hero p {
+                width: 100%;
+                max-width: 30ch;
+                margin-left: auto;
+                margin-right: auto;
+                overflow-wrap: break-word;
+            }
+
+            .cta-button,
+            .form-submit,
+            .contact-form button {
+                width: 100%;
+                text-align: center;
+            }
+
+            .carte-hero-images {
+                grid-template-columns: 1fr;
+            }
+
+            .carte-hero-images .cocktail-gallery-card,
+            .carte-hero-images .cocktail-photo {
+                aspect-ratio: 3 / 4;
+            }
+
+            .vin-item,
+            .carte-happy-item,
+            .menu-item {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 0.15rem;
+            }
+
+            .vin-item .carte-prix,
+            .carte-happy-item .carte-prix,
+            .menu-item .item-price {
+                margin-left: 0;
+            }
+
+            .form-content {
+                width: 100%;
+                max-height: 88svh;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1424,19 +1897,19 @@
                         <img src="images/le-winston-banniere-accueil.png" alt="Le Winston soirée d'accueil">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/guitare-basse-lumi%C3%A8re-tamis%C3%A9e.png" alt="Guitare basse lumineuse">
+                        <img src="images/guitare-basse-lumiere-tamisee.png" alt="Guitare basse lumineuse">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/pont-historique-%20de-gien-la-nuit.png" alt="Pont historique de Gien la nuit">
+                        <img src="images/pont-historique-de-gien-la-nuit.png" alt="Pont historique de Gien la nuit">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/robinet-de%20grimbergen-rouge.png" alt="Robinet de Grimbergen rouge">
+    <img src="images/robinet-de-grimbergen-rouge.png" alt="Robinet de Grimbergen rouge">
+</div>
+                    <div class="carousel-slide">
+                        <img src="images/taps-de-biere-dans-un-pub-winston.png" alt="Taps de bière dans le pub Winston">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/taps-de-biere%20dans-un-pub-winston.png" alt="Taps de bière dans le pub Winston">
-                    </div>
-                    <div class="carousel-slide">
-                        <img src="images/terrasse-de-pub-sous%20les%20arches-winston.png" alt="Terrasse de pub sous les arches Winston">
+                        <img src="images/terrasse-de-pub-sous-les-arches-winston.png" alt="Terrasse de pub sous les arches Winston">
                     </div>
                 </div>
                 <div class="carousel-nav">
@@ -1513,10 +1986,10 @@
                             <img src="images/gallery-2.png" alt="Photo galerie 2 du Winston">
                         </div>
                         <div class="lieu-carousel-slide">
-                            <img src="images/robinet-de%20grimbergen-rouge.png" alt="Robinet de Grimbergen rouge">
-                        </div>
+    <img src="images/robinet-de-grimbergen-rouge.png" alt="Robinet de Grimbergen rouge">
+</div>
                         <div class="lieu-carousel-slide">
-                            <img src="images/taps-de-biere%20dans-un-pub-winston.png" alt="Taps de bière dans un pub Winston">
+                           <img src="images/taps-de-biere-dans-un-pub-winston.png" alt="Taps de bière dans un pub Winston">
                         </div>
                         <div class="lieu-carousel-slide">
                             <img src="images/verre-jeu-en-bois.png" alt="Verre et jeu en bois au Winston">
@@ -1525,7 +1998,7 @@
                             <img src="images/le-winston-banniere-accueil.png" alt="Bannière accueil Le Winston">
                         </div>
                         <div class="lieu-carousel-slide">
-                            <img src="images/terrasse-de-pub-sous%20les%20arches-winston.png" alt="Terrasse du Winston sous les arches">
+                            <img src="images/terrasse-de-pub-sous-les-arches-winston.png" alt="Terrasse du Winston sous les arches">
                         </div>
                         <div class="lieu-carousel-slide">
                             <img src="images/gallery-4.png" alt="Photo galerie 4 du Winston">
@@ -1570,7 +2043,7 @@
             <div class="day-card">
                 <div class="day-name">Jeudi</div>
                 <div class="day-theme">Afterwork + Cocktail</div>
-                <div class="day-desc">Le début du week-end commence jeudi ici. Happy hour étendu, cocktail signature de la semaine, ambiance montante. Les collègues deviennent amis.</div>
+                <div class="day-desc">Le début du week-end commence jeudi ici. Cocktail signature de la semaine, ambiance montante. Les collègues deviennent amis.</div>
             </div>
             <div class="day-card">
                 <div class="day-name">Vendredi</div>
@@ -1588,7 +2061,7 @@
                 <div class="day-desc">
                     Pour ceux qui veulent prolonger le week-end sans le brusquer. Le Winston ouvre aussi le dimanche… mais seulement si on nous le demande.
                     À partir de 15 personnes, on peut privatiser le lieu pour un moment à part : anniversaire, retrouvailles, soirée tranquille entre proches.
-                    <br><br><strong>Cliquez pour faire une demande.</strong>
+                   <br><br><strong style="color: var(--color-accent);">Cliquez pour faire une demande.</strong>
                 </div>
             </div>
         </div>
@@ -1654,7 +2127,7 @@
                 <p>Le jeudi, le Winston devient le QG des afterworks. Entre collègues, entre amis, entre départements — c'est le moment où la hiérarchie s'efface et où les vraies conversations commencent.</p>
 
                 <ul class="afterwork-list">
-                    <li>Happy hour de 17h à 20h</li>
+                    <li>Happy hour le vendredi de 17h à 20h</li>
                     <li>Planches à partager pour l'équipe</li>
                     <li>Jeux de société pour briser la glace</li>
                     <li>Ambiance détendue, pas de dress code</li>
@@ -1665,7 +2138,7 @@
                 <div class="highlight-box">
                     <h4>Formule Afterwork</h4>
                     <div class="price">Pinte + Planche = 20€</div>
-                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">De 17h à 20h, du jeudi au vendredi</p>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">Le vendredi de 17h à 20h</p>
                 </div>
 
                 <button type="button" class="cta-button" onclick="openForm()">Organiser un afterwork</button>
@@ -1678,53 +2151,73 @@
             </div>
         </div>
     </section>
+<!-- Cocktails Signature -->
+<section id="cocktail">
+    <h2>Cocktails Signature</h2>
 
-    <!-- Cocktail Signature -->
-    <section id="cocktail">
-        <h2>Cocktail Signature</h2>
+    <div class="cocktail-hero">
+        <p class="cocktail-subtitle">Cocktails Signature</p>
 
-        <div class="cocktail-hero">
-            <p class="cocktail-subtitle">Cocktail Signature</p>
+        <h3 class="cocktail-main-title">Les signatures du Winston</h3>
 
-            <h3 class="cocktail-main-title">Le Secret du Winston</h3>
+        <div class="cocktail-name">La Giennoise, Le Picon Gingembre, Le Cerf de Loire & Le Rouge Loire</div>
 
-            <div class="cocktail-name">Le Mystère de Loire</div>
+        <p class="cocktail-desc">
+            Quatre cocktails maison simples, frais et bien ancrés dans l'esprit du bar.
+        </p>
+    </div>
 
-            <p class="cocktail-desc">
-                Chaque semaine, notre barman crée un cocktail unique.
-                Une recette inédite, des saveurs surprenantes, une présentation soignée.
-                Disponible en quantité limitée. Une fois épuisé, il faudra attendre la semaine suivante.
+    <div class="carte-hero">
+        <div class="carte-hero-text">
+            <h3>Cocktails Signature</h3>
+            <div class="cocktail-moment">La Giennoise</div>
+            <p class="carte-hero-copy">
+                Bière • vin blanc • citron
             </p>
-
-            <div class="cocktail-days">
-                <span>Jeudi</span>
-                <span>Vendredi</span>
-            </div>
+            <div class="cocktail-moment">Le Picon Gingembre</div>
+            <p class="carte-hero-copy">
+                Picon • gingembre • bière pression
+            </p>
+            <div class="cocktail-moment">Le Cerf de Loire</div>
+            <p class="carte-hero-copy">
+                Coteaux du Giennois • Picon • Jäger • miel • citron • bulles
+            </p>
+            <div class="cocktail-moment">Le Rouge Loire</div>
+            <p class="carte-hero-copy">
+                Campari • gin • Coteaux du Giennois rouge
+            </p>
         </div>
 
-        <div class="carte-hero">
-            <div class="carte-hero-text">
-                <h3>Le Cocktail du Moment</h3>
-                <div class="cocktail-moment">Mystère de Loire</div>
-                <p class="carte-hero-copy">Recette unique qui change chaque semaine. Disponible jeudi et vendredi uniquement.</p>
-                <div class="limited-badge">Quantité Limitée</div>
+        <div class="carte-hero-images">
+            <div class="cocktail-gallery-card">
+                <img src="images/la-giennoise.png" alt="La Giennoise">
+                <h4>La Giennoise</h4>
+                <p>Bière, vin blanc et citron.</p>
             </div>
-            <div class="carte-hero-images">
-                <div class="cocktail-gallery-card">
-                    <img src="images/cocktail.png" alt="Cocktail du Winston">
-                    <h4>Mystère de Loire</h4>
-                    <p>Le cocktail actuellement proposé cette semaine.</p>
-                </div>
-                <div class="cocktail-photo">
-                    <img src="images/cocktail-lumineux-au-bar-winston.png" alt="Cocktail lumineux au bar Winston">
-                </div>
+
+            <div class="cocktail-gallery-card">
+                <img src="images/picon.png" alt="Le Picon Gingembre">
+            </div>
+
+            <div class="cocktail-gallery-card">
+                <img src="images/cocktail-le-cerf-de-loire.png" alt="Le Cerf de Loire">
+                <h4>Le Cerf de Loire</h4>
+                <p>Coteaux du Giennois, Picon, Jäger, miel, citron et bulles. Un apéro du coin avec du caractère.</p>
+            </div>
+
+            <div class="cocktail-gallery-card">
+                <img src="images/cocktail-le-rouge-loire.png" alt="Le Rouge Loire">
+                <h4>Le Rouge Loire</h4>
+                <p>Un apéritif de caractère entre Campari, gin et Coteaux du Giennois rouge. Amer, fruité et légèrement agrumé.</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <!-- La Carte -->
     <section id="carte">
-        <h2>La Carte</h2>
+        <h2>Le Winston — Carte des Boissons</h2>
         <div class="menu-section carte-jaune">
             <div class="carte-list">
                 <div class="carte-block"><span class="carte-emoji">🍺</span> <span class="carte-titre">BIÈRES PRESSION</span><br>
@@ -1733,17 +2226,18 @@
                     1664 Blanche <span class="carte-prix">→ 5€ / 9€</span><br>
                     Grimbergen Rouge / Saison <span class="carte-prix">→ 5€ / 9€</span><br>
                     <span class="carte-sous">Bières de caractère</span><br>
-                    La Bête <span class="carte-prix">→ 5€ / 8€</span><br>
+                    La Bête <span class="carte-prix">→ 5€ / 9€</span><br>
                     Brooklyn IPA <span class="carte-prix">→ 5,50€ / 10€</span><br>
                     Grimbergen Blonde <span class="carte-prix">→ 5€ / 9€</span>
                 </div>
                 <div class="carte-block"><span class="carte-emoji">🍸</span> <span class="carte-titre">APÉRITIFS</span><br>
                     Ricard / Pastis <span class="carte-prix">→ 4€</span><br>
                     Perroquet Sauvage <span class="carte-prix">→ 6,50€</span><br>
-                    Porto Rouge <span class="carte-prix">→ 6€</span><br>
-                    Martini Rouge/Blanc <span class="carte-prix">→ 6€</span><br>
+                    Porto Rouge / Blanc <span class="carte-prix">→ 6€</span><br>
+                    Martini Rouge / Blanc <span class="carte-prix">→ 6€</span><br>
                     Campari <span class="carte-prix">→ 6€</span><br>
                     Suze <span class="carte-prix">→ 5,50€</span><br>
+                    Marie Brizard <span class="carte-prix">→ 6€</span><br>
                     Kir <span class="carte-prix">→ 6€</span><br>
                     <span class="carte-sous">Supplément</span> <span class="carte-prix">→ 0,50€</span><br>
                     Picon <span class="carte-prix">→ 1€</span>
@@ -1768,54 +2262,81 @@
                     Diplomatico <span class="carte-prix">→ 9€</span><br>
                     Kraken <span class="carte-prix">→ 7,50€</span><br>
                     3 Rivières <span class="carte-prix">→ 7€</span><br>
+                    Botran <span class="carte-prix">→ 8,50€</span><br>
+                    El Presidente <span class="carte-prix">→ 9€</span><br>
+                    Secha de la Silva <span class="carte-prix">→ 8,50€</span><br>
+                    Turquoise Bay <span class="carte-prix">→ 8,50€</span><br>
+                    Millonario <span class="carte-prix">→ 10€</span><br>
                     Rhum arrangé <span class="carte-prix">→ 8€</span>
                 </div>
                 <div class="carte-block"><span class="carte-emoji">🥃</span> <span class="carte-titre">WHISKIES</span><br>
                     Clan Campbell <span class="carte-prix">→ 6€</span><br>
+                    Baby <span class="carte-prix">→ 4€</span><br>
                     Jack Daniel’s <span class="carte-prix">→ 7,50€</span><br>
-                    Jack Honey / Apple <span class="carte-prix">→ 7,50€</span><br>
-                    Aberlour / Cardhu / Chivas <span class="carte-prix">→ 9€</span><br>
-                    Slane <span class="carte-prix">→ 7€</span><br>
-                    Connemara / Haig <span class="carte-prix">→ 9€</span><br>
+                    Jack Daniel’s Honey <span class="carte-prix">→ 7,50€</span><br>
+                    Jack Daniel’s Apple <span class="carte-prix">→ 7,50€</span><br>
+                    Cardhu 12 ans <span class="carte-prix">→ 9€</span><br>
+                    Chivas <span class="carte-prix">→ 9€</span><br>
+                    Haig <span class="carte-prix">→ 9€</span><br>
+                    Connemara <span class="carte-prix">→ 9€</span><br>
+                    Copper Dog <span class="carte-prix">→ 7,50€</span><br>
                     Sexton <span class="carte-prix">→ 7,50€</span><br>
-                    Monkey Shoulder <span class="carte-prix">→ 7€</span><br>
-                    Copper Dog <span class="carte-prix">→ 7,50€</span>
+                    Yushan <span class="carte-prix">→ 9,50€</span><br>
+                    Bushmills <span class="carte-prix">→ 7,50€</span><br>
+                    Jim Beam Maple <span class="carte-prix">→ 7€</span><br>
+                    Eddu <span class="carte-prix">→ 8€</span><br>
+                    Monkey Shoulder <span class="carte-prix">→ 7€</span>
                 </div>
-                <div class="carte-block"><span class="carte-emoji">🍷</span> <span class="carte-titre">VINS</span><br>
-                    Menetou-Salon <span class="carte-prix">→ 6€ / 35€</span><br>
-                    Cote de Provence <span class="carte-prix">→ 5€ / 25€</span><br>
-                    Chinon <span class="carte-prix">→ 5€ / 25€</span><br>
-                    Monbazillac <span class="carte-prix">→ 5,50€ / 25€</span><br>
-                    Coteaux du Giennois <span class="carte-prix">→ 6€ / 35€</span>
+                <div class="carte-block carte-vins"><span class="carte-emoji">🍷</span> <span class="carte-titre">VINS</span><br>
+                    <span class="vin-item"><span class="vin-name"><span class="vin-emoji">🥂</span> Menetou-Salon</span> <span class="carte-prix">→ 6€ / 35€</span></span>
+                    <span class="vin-item"><span class="vin-name"><span class="vin-emoji">🌸</span> Côte de Provence</span> <span class="carte-prix">→ 5€ / 25€</span></span>
+                    <span class="vin-item"><span class="vin-name"><span class="vin-emoji">🍷</span> Chinon</span> <span class="carte-prix">→ 5€ / 25€</span></span>
+                    <span class="vin-item"><span class="vin-name"><span class="vin-emoji">🍯</span> Monbazillac</span> <span class="carte-prix">→ 5,50€ / 25€</span></span>
+                    <span class="vin-item"><span class="vin-name"><span class="vin-emoji">🌿</span> Coteaux du Giennois</span> <span class="carte-prix">→ 6€ / 35€</span></span>
                 </div>
-                <div class="carte-block"><span class="carte-titre">LIQUEUR</span><br>
-                    Get 27 et 31Bailey's <span class="carte-prix">→ 6€</span><br>
-                    Bailey's <span class="carte-prix">→ 6€</span><br>
+                <div class="carte-block"><span class="carte-titre">LIQUEURS</span><br>
+                    Get 27 et 31 <span class="carte-prix">→ 6€</span><br>
+                    Bailey’s <span class="carte-prix">→ 6€</span><br>
                     Malibu <span class="carte-prix">→ 6€</span><br>
-                    Triple Sec <span class="carte-prix">→ 4,5€</span><br>
-                    Vieille Prune <span class="carte-prix">→ 7,5€</span><br>
-                    Cognac ABK6 <span class="carte-prix">→ 7€</span>
+                    Menthe Pastille <span class="carte-prix">→ 6€</span><br>
+                    Limoncello <span class="carte-prix">→ 5,50€</span><br>
+                    Triple Sec <span class="carte-prix">→ 4,50€</span><br>
+                    Cointreau <span class="carte-prix">→ 6€</span><br>
+                    Grand Marnier <span class="carte-prix">→ 6€</span><br>
+                    Vieille Prune <span class="carte-prix">→ 7,50€</span><br>
+                    Prune Mirabelle <span class="carte-prix">→ 6,50€</span><br>
+                    Eau de vie Poire <span class="carte-prix">→ 6€</span><br>
+                    Cognac ABK6 <span class="carte-prix">→ 7€</span><br>
+                    Calvados <span class="carte-prix">→ 7€</span><br>
+                    Chartreuse <span class="carte-prix">→ 8,50€</span>
                 </div>
-                <div class="carte-block"><span class="carte-titre">SOFT</span><br>
+
+                <div class="carte-block">
+                    <span class="carte-titre">SOFTS</span><br>
                     Coca <span class="carte-prix">→ 4,50€</span><br>
                     Ice Tea <span class="carte-prix">→ 4,50€</span><br>
                     Orangina <span class="carte-prix">→ 4,50€</span><br>
                     Perrier <span class="carte-prix">→ 4,50€</span><br>
                     Schweppes Tonic <span class="carte-prix">→ 4,50€</span><br>
                     Schweppes Agrum <span class="carte-prix">→ 4,50€</span><br>
-                    Soft exotic (pour les curieux) <span class="carte-prix">→ 4,50€</span>
+                    Foco Litchi <span class="carte-prix">→ 4,50€</span><br>
+                    Foco Mangoustan <span class="carte-prix">→ 4,50€</span><br>
+                    Foco Goyave Mangue <span class="carte-prix">→ 4,50€</span><br>
+                    Ginger Beer <span class="carte-prix">→ 5,50€</span>
                 </div>
+
                 <div class="carte-block carte-happy">
-                    <span class="carte-emoji">⏰</span> <span class="carte-titre">HAPPY HOUR (RAPPEL)</span><br>
-                    17h – 20h<br>
-                    <span class="carte-happy-item">Pinte <span class="carte-prix">7€</span></span><br>
-                    <span class="carte-happy-item">Demi <span class="carte-prix">4€</span></span><br>
-                    <span class="carte-happy-item">Pinte + planche <span class="carte-prix">20€</span></span>
+                    <span class="carte-emoji">⏰</span>
+                    <span class="carte-titre">HAPPY HOUR (RAPPEL)</span><br>
+                    <span class="happy-days">Vendredi et samedi — Early Bird</span>
+                    <span class="happy-time">17h – 20h</span>
+                    <span class="carte-happy-item"><span>🍺 Pinte</span> <span class="carte-prix">7€</span></span>
+                    <span class="carte-happy-item"><span>🍻 Demi</span> <span class="carte-prix">4€</span></span>
+                    <span class="carte-happy-item"><span>🧀 Pinte + planche</span> <span class="carte-prix">20€</span></span>
                 </div>
             </div>
         </div>
     </section>
-
     <!-- Contact -->
     <section id="contact">
         <h2>Contact</h2>
@@ -2011,6 +2532,17 @@
     <footer>
         <p style="font-family: var(--font-title); font-size: 1.5rem; color: var(--color-accent); margin-bottom: 1rem;">Le Winston</p>
         <p>Pub bord de Loire — Bois, pierre, convivialité</p>
+        
+        <!-- Réseaux sociaux -->
+        <div class="social-links" style="display: flex; justify-content: center; gap: 1rem; margin: 1.5rem 0;">
+            <a href="https://www.facebook.com/profile.php?id=100063553841778" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent); font-size: 1.5rem;" title="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/winston_gien_officiel?igsh=MWloNnVrOHZlNjhpaA==" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent); font-size: 1.5rem;" title="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+        </div>
+        
         <p style="margin-top: 1rem; font-size: 0.8rem;">© 2025 Le Winston Gien. Tous droits réservés.</p>
     </footer>
 
